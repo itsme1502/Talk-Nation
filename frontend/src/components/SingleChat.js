@@ -11,7 +11,6 @@ import ProfileModal from "./miscellaneous/ProfileModal";
 import ScrollableChat from "./ScrollableChat";
 import Lottie from "react-lottie";
 import animationData from "../animations/typing.json";
-
 import io from "socket.io-client";
 import UpdateGroupChatModal from "./miscellaneous/UpdateGroupChatModal";
 import { ChatState } from "../Context/ChatProvider";
@@ -35,7 +34,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
       preserveAspectRatio: "xMidYMid slice",
     },
   };
-  const { selectedChat, setSelectedChat, user, notification, setNotification } =
+  const { selectedChat, setSelectedChat, user, notification, setNotification, setChats ,hasNewGroup, setHasNewGroup } =
     ChatState();
 
   const fetchMessages = async () => {
@@ -47,7 +46,6 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
           Authorization: `Bearer ${user.token}`,
         },
       };
-
       setLoading(true);
 
       const { data } = await axios.get(
@@ -124,7 +122,7 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
   useEffect(() => {
     socket.on("message recieved", (newMessageRecieved) => {
       if (
-        !selectedChatCompare || // if chat is not selected or doesn't match current chat
+        !selectedChatCompare || 
         selectedChatCompare._id !== newMessageRecieved.chat._id
       ) {
         if (!notification.includes(newMessageRecieved)) {
@@ -135,7 +133,24 @@ const SingleChat = ({ fetchAgain, setFetchAgain }) => {
         setMessages([...messages, newMessageRecieved]);
       }
     });
-  });
+    socket.on("You Are Added in A New Group", async()=> {
+      const config = {
+        headers: {
+          Authorization: `Bearer ${user.token}`,
+        },
+      };
+
+      const { data } = await axios.get("/api/chat", config);
+      setChats(data);
+    });
+  },[fetchAgain,messages,notification,setFetchAgain,setNotification]);
+
+  useEffect(()=> {
+    if(hasNewGroup){
+      socket.emit("new group created",hasNewGroup);
+      setHasNewGroup(false);
+    }
+  },[hasNewGroup])
 
   const typingHandler = (e) => {
     setNewMessage(e.target.value);

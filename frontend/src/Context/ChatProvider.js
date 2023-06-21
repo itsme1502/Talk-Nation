@@ -8,6 +8,7 @@ const ChatProvider = ({ children }) => {
   const [user, setUser] = useState();
   const [notification, setNotification] = useState([]);
   const [chats, setChats] = useState();
+   const [hasNewGroup, setHasNewGroup] = useState(false);
 
   const history = useHistory();
 
@@ -19,7 +20,6 @@ const ChatProvider = ({ children }) => {
       setUser(null);
       history.push("/");
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [history]);
 
   return (
@@ -33,6 +33,7 @@ const ChatProvider = ({ children }) => {
         setNotification,
         chats,
         setChats,
+        hasNewGroup, setHasNewGroup
       }}
     >
       {children}
