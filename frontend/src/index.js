@@ -10,6 +10,7 @@ import axios from 'axios';
 axios.defaults.baseURL = "https://talk-nation.onrender.com"
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
+
 root.render(
     <BrowserRouter>
     <ChatProvider>
