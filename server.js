@@ -75,6 +75,12 @@ io.on("connection", (socket) => {
     });
   });
 
+  socket.on("new group created",(newGroup) => {
+     for(user  of newGroup){
+      socket.in(user._id).emit("You Are Added in A New Group");
+     }
+  })
+
   socket.off("setup", () => {
     console.log("USER DISCONNECTED");
     socket.leave(userData._id);
