@@ -7,7 +7,7 @@ import {BrowserRouter} from 'react-router-dom'
 import ChatProvider from './Context/ChatProvider';
 import axios from 'axios';
 
-// axios.defaults.baseURL = "https://talk-nation.onrender.com"
+axios.defaults.baseURL = "https://talk-nation.onrender.com"
 axios.defaults.baseURL = "http://localhost:5000";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
