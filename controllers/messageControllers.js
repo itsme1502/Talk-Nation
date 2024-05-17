@@ -42,8 +42,9 @@ const sendMessage = asyncHandler(async (req, res) => {
       path: "chat.users",
       select: "name pic email",
     });
-    message.content = dcryptString(message.content);
     await Chat.findByIdAndUpdate(req.body.chatId, { latestMessage: message });
+    message.content = dcryptString(message.content);
+
 
     res.json(message);
   } catch (error) {-

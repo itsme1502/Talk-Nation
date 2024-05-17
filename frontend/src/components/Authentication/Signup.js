@@ -39,11 +39,10 @@ const Signup = () => {
         status: "warning",
         duration: 5000,
         isClosable: true,
-        position: "bottom",
+        position: "top",
       });
       return;
     }
-    console.log(name, email, password, pic);
     try {
       const config = {
         headers: {

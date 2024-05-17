@@ -19,6 +19,7 @@ import { ChatState } from "../../Context/ChatProvider";
 import UserBadgeItem from "../userAvatar/UserBadgeItem";
 import UserListItem from "../userAvatar/UserListItem";
 
+
 const GroupChatModal = ({ children }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const [groupChatName, setGroupChatName] = useState();
@@ -112,7 +113,7 @@ const GroupChatModal = ({ children }) => {
         status: "success",
         duration: 5000,
         isClosable: true,
-        position: "bottom",
+        position: "top",
       });
     } catch (error) {
       toast({
@@ -121,7 +122,7 @@ const GroupChatModal = ({ children }) => {
         status: "error",
         duration: 5000,
         isClosable: true,
-        position: "bottom",
+        position: "top",
       });
     }
   };
@@ -152,7 +153,7 @@ const GroupChatModal = ({ children }) => {
             </FormControl>
             <FormControl>
               <Input
-                placeholder="Add Users eg: John, Piyush, Jane"
+                placeholder="Search participants to be added"
                 mb={1}
                 onChange={(e) => handleSearch(e.target.value)}
               />
